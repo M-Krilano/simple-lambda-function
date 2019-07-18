@@ -1,0 +1,29 @@
+service: my-first-lambda
+
+# enable required plugins
+plugins:
+  - serverless-webpack
+  - serverless-offline
+
+# Deploying serverless at AWS cloud w/ Node(v8.10)
+provider:
+  name: aws
+  runtime: nodejs8.10
+  region: us-east-1
+  stage: dev
+
+# Description of Lambda Function
+functions:
+  hello: # function name
+    handler: src/handler.main # code
+    # create rest point to access from outside
+    events:
+      - http:
+          path: hello # path for the endpoint
+          method: any # http method for endpoint
+
+custom:
+  webpack:
+    webpackConfig: "webpack.config.js" # name of webpack config
+    includeModules: true # add excluded modules to bundle
+    packager: "npm" # package manager used
